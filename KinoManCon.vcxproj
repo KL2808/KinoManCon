@@ -139,7 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BookingsDB.cpp" />
+    <ClCompile Include="CinemasDB.cpp" />
+    <ClCompile Include="ConsoleHandler.cpp" />
+    <ClCompile Include="CustomersDB.cpp" />
     <ClCompile Include="KinoManCon.cpp" />
+    <ClCompile Include="MoviesDB.cpp" />
+    <ClCompile Include="ShowsDB.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BookingsDB.h" />
+    <ClInclude Include="CinemasDB.h" />
+    <ClInclude Include="ConsoleHandler.h" />
+    <ClInclude Include="CustomersDB.h" />
+    <ClInclude Include="DateTime.h" />
+    <ClInclude Include="MoviesDB.h" />
+    <ClInclude Include="ShowsDB.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

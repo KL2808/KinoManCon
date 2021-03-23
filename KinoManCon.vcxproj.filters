@@ -13,10 +13,66 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Headerdateien\Databases">
+      <UniqueIdentifier>{9c3b4210-92a2-4f66-8bac-f90b7028d8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Databases">
+      <UniqueIdentifier>{7098deba-524b-4382-a8df-d22a9e225007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Structs">
+      <UniqueIdentifier>{8f6165fa-b15a-4ea8-9b62-f4ade3ce2b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\UserInterfaceTools">
+      <UniqueIdentifier>{5a865baa-fa27-46a7-9f07-1890b6edbf62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\UserInterfaceTools">
+      <UniqueIdentifier>{cac0f3d8-4cec-4742-b0d1-0849bf6ec992}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KinoManCon.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="CinemasDB.cpp">
+      <Filter>Quelldateien\Databases</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleHandler.cpp">
+      <Filter>Quelldateien\UserInterfaceTools</Filter>
+    </ClCompile>
+    <ClCompile Include="BookingsDB.cpp">
+      <Filter>Quelldateien\Databases</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomersDB.cpp">
+      <Filter>Quelldateien\Databases</Filter>
+    </ClCompile>
+    <ClCompile Include="MoviesDB.cpp">
+      <Filter>Quelldateien\Databases</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowsDB.cpp">
+      <Filter>Quelldateien\Databases</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CinemasDB.h">
+      <Filter>Headerdateien\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="MoviesDB.h">
+      <Filter>Headerdateien\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomersDB.h">
+      <Filter>Headerdateien\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTime.h">
+      <Filter>Headerdateien\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleHandler.h">
+      <Filter>Headerdateien\UserInterfaceTools</Filter>
+    </ClInclude>
+    <ClInclude Include="ShowsDB.h">
+      <Filter>Headerdateien\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="BookingsDB.h">
+      <Filter>Headerdateien\Databases</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
