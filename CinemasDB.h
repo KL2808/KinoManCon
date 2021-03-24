@@ -7,7 +7,7 @@ struct Cinema
 {
 	int id;
 	std::string name;
-	//TODO: Add Seats
+	std::vector<int> seats;
 };
 
 class CinemasDB

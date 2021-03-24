@@ -1,12 +1,15 @@
 #pragma once
 #include <string>
+#include <vector>
 
-class ConsoleHandler
+static class ConsoleHandler
 {
 private:
 
 
 public:
+
+	void Clear();
 
 	void Write(std::string);
 
@@ -15,4 +18,6 @@ public:
 	void Write(std::string, bool, int);
 
 	void WritePredefined(int);
+
+	int ListSelection(std::string title, std::vector<std::string> items);
 };

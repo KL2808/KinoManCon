@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 
 #include <string>
 #include <vector>
@@ -8,6 +8,8 @@ struct Booking
 	int id;
 	int customerId;
 	int showId;
+	int row; 
+	int seat;
 };
 
 class BookingsDB
@@ -18,7 +20,7 @@ private:
 
 public:
 
-	std::vector<Booking> cinemas;
+	std::vector<Booking> bookings;
 
 	BookingsDB(std::string);
 

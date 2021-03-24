@@ -146,6 +146,7 @@
     <ClCompile Include="KinoManCon.cpp" />
     <ClCompile Include="MoviesDB.cpp" />
     <ClCompile Include="ShowsDB.cpp" />
+    <ClCompile Include="StringTools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BookingsDB.h" />

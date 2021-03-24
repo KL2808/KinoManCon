@@ -28,6 +28,9 @@
     <Filter Include="Quelldateien\UserInterfaceTools">
       <UniqueIdentifier>{cac0f3d8-4cec-4742-b0d1-0849bf6ec992}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Tools">
+      <UniqueIdentifier>{5f41d945-ee26-4289-846a-76caff3734fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KinoManCon.cpp">
@@ -50,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="ShowsDB.cpp">
       <Filter>Quelldateien\Databases</Filter>
+    </ClCompile>
+    <ClCompile Include="StringTools.cpp">
+      <Filter>Quelldateien\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
