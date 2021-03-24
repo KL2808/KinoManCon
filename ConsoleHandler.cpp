@@ -55,6 +55,8 @@ int ConsoleHandler::ListSelection(std::string title, std::vector<std::string> it
 
 		Clear();
 
+		if (ascii == 27) return -1;
+
 	} while (ascii != 13);
 
 	return res;
