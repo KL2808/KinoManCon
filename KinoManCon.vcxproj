@@ -147,6 +147,7 @@
     <ClCompile Include="MoviesDB.cpp" />
     <ClCompile Include="ShowsDB.cpp" />
     <ClCompile Include="StringTools.cpp" />
+    <ClCompile Include="VectorTools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BookingsDB.h" />

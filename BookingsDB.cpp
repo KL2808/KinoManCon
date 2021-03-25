@@ -2,7 +2,9 @@
 
 #include "BookingsDB.h"
 
-BookingsDB::BookingsDB(std::string fullpathItemsDB) //constructor
+#include "StringTools.cpp"
+
+BookingsDB::BookingsDB(std::string fullpathItemsDB)
 {
 	fullpath = fullpathItemsDB;
 	Load();
@@ -20,8 +22,7 @@ void BookingsDB::Save()
 		data += std::to_string(bookings[i].seat) + ";\n";
 	}
 
-	std::ofstream File;
-	File.open(fullpath);
+	std::ofstream File(fullpath);
 	File << data;
 	File.close();
 
@@ -29,5 +30,22 @@ void BookingsDB::Save()
 
 void BookingsDB::Load()
 {
-	//TODO: Load cinemas
+	std::ifstream file(fullpath);
+	std::string line;
+
+	while (std::getline(file, line))
+	{
+		std::vector<std::string> members;
+		members = split(line, ';');
+		Booking booking = 
+		{ 
+			atoi(members[0].c_str()),
+			atoi(members[1].c_str()),
+			atoi(members[2].c_str()),
+			atoi(members[3].c_str()),
+			atoi(members[4].c_str())
+		};
+		bookings.push_back(booking);
+	}
+	file.close();
 }

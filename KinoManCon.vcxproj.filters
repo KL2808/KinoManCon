@@ -57,6 +57,9 @@
     <ClCompile Include="StringTools.cpp">
       <Filter>Quelldateien\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="VectorTools.cpp">
+      <Filter>Quelldateien\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CinemasDB.h">

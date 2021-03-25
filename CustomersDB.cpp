@@ -5,7 +5,7 @@
 
 #include "StringTools.cpp"
 
-CustomersDB::CustomersDB(std::string fullpathItemsDB) //constructor
+CustomersDB::CustomersDB(std::string fullpathItemsDB)
 {
 	fullpath = fullpathItemsDB;
 	Load();
@@ -18,6 +18,7 @@ void CustomersDB::Save()
 	{
 		data += std::to_string(customers[i].id) + ";";
 		data += customers[i].name + ";";
+
 		data += std::to_string(customers[i].birthday.day) + ",";
 		data += std::to_string(customers[i].birthday.month) + ",";
 		data += std::to_string(customers[i].birthday.year) + ";\n";
@@ -37,8 +38,20 @@ void CustomersDB::Load()
 	{
 		std::vector<std::string> members = split(line, ';');
 		std::vector<std::string> dateTime_members = split(members[2], ',');
-		DateTime birthday = { atoi(dateTime_members[0].c_str()), atoi(dateTime_members[1].c_str()), atoi(dateTime_members[2].c_str()), 0, 0};
-		Customer customer = { atoi(members[0].c_str()), members[1], birthday };
+		DateTime birthday = 
+		{ 
+			atoi(dateTime_members[0].c_str()),
+			atoi(dateTime_members[1].c_str()),
+			atoi(dateTime_members[2].c_str()),
+			0,
+			0
+		};
+		Customer customer = 
+		{ 
+			atoi(members[0].c_str()),
+			members[1],
+			birthday
+		};
 		customers.push_back(customer);
 	}
 	file.close();

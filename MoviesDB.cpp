@@ -5,7 +5,7 @@
 
 #include "StringTools.cpp"
 
-MoviesDB::MoviesDB(std::string fullpathItemsDB) //constructor
+MoviesDB::MoviesDB(std::string fullpathItemsDB)
 {
 	fullpath = fullpathItemsDB;
 	Load();
@@ -35,7 +35,12 @@ void MoviesDB::Load()
 	{
 		std::vector<std::string> members;
 		members = split(line, ';');
-		Movie movie = {atoi(members[0].c_str()), members[1], members[2] };
+		Movie movie = 
+		{
+			atoi(members[0].c_str()),
+			members[1],
+			members[2]
+		};
 		movies.push_back(movie);
 	}
 	file.close();
