@@ -45,3 +45,9 @@ void MoviesDB::Load()
 	}
 	file.close();
 }
+
+void MoviesDB::Add(std::string name, std::string info) 
+{
+	movies.push_back({ (int)movies.size() + 0, name, info });
+	Save();
+}

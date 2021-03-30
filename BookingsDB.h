@@ -27,4 +27,6 @@ public:
 	void Save();
 
 	void Load();
+
+	void Add();
 };

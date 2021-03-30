@@ -17,7 +17,25 @@ public:
 
 	void Write(std::string, bool, int);
 
-	void WritePredefined(int);
+	std::string ReadString(std::string, int);
+
+	int ReadInt(std::string, int);
 
 	int ListSelection(std::string title, std::vector<std::string> items);
+
+	void MainMenu();
+
+	void AddItemsMenu();
+
+	void ShowItemsMenu();
+
+	void BookingWizard();
+	
+	void ShowWizard();
+
+	void AddCustomer();
+
+	void AddMovie();
+
+	void AddCinema();
 };

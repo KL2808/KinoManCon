@@ -51,3 +51,9 @@ void CinemasDB::Load()
 	}
 	file.close();
 }
+
+void CinemasDB::Add(std::string name, std::vector<int> seats)
+{
+	cinemas.push_back({ (int)cinemas.size() + 0, name, seats });
+	Save();
+}

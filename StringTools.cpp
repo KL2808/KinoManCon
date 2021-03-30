@@ -15,3 +15,9 @@ inline std::vector<std::string> split(std::string subject, char delimiter)
 
 	return result;
 }
+
+inline bool isInt(std::string string) //TODO: debug this function, there seems to be a litle bug
+{
+	for (int i = 0; i < string.size(); i++) if (string.c_str()[i] < 48 || string.c_str()[i] > 57) return false;
+	return true;
+}

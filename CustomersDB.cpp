@@ -56,3 +56,9 @@ void CustomersDB::Load()
 	}
 	file.close();
 }
+
+void CustomersDB::Add(std::string name, DateTime birthday)
+{
+	customers.push_back({ (int)customers.size() + 0, name, birthday });
+	Save();
+}

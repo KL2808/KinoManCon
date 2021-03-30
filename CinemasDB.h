@@ -25,4 +25,6 @@ public:
 	void Save();
 
 	void Load();
+
+	void Add(std::string, std::vector<int>);
 };
