@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="BookingsDB.h" />
     <ClInclude Include="CinemasDB.h" />
+    <ClInclude Include="Colors.h" />
     <ClInclude Include="ConsoleHandler.h" />
     <ClInclude Include="CustomersDB.h" />
     <ClInclude Include="DateTime.h" />

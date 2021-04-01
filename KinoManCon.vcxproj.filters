@@ -83,5 +83,8 @@
     <ClInclude Include="BookingsDB.h">
       <Filter>Headerdateien\Databases</Filter>
     </ClInclude>
+    <ClInclude Include="Colors.h">
+      <Filter>Headerdateien\UserInterfaceTools</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

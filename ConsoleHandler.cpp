@@ -9,6 +9,8 @@
 #include "MoviesDB.h"
 #include "CinemasDB.h"
 
+#include "Colors.h"
+
 #include "StringTools.cpp"
 
 void ConsoleHandler::Clear() 
@@ -24,7 +26,7 @@ void ConsoleHandler::Write(std::string string)
 
 void ConsoleHandler::Write(std::string string, bool endl)
 {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15); //inspiration from: https://www.daniweb.com/programming/software-development/code/216345/add-a-little-color-to-your-console-text
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),Colors::WHITE); //inspiration from: https://www.daniweb.com/programming/software-development/code/216345/add-a-little-color-to-your-console-text
 	std::cout << string << (endl ? "\n" : "");
 }
 
@@ -64,7 +66,7 @@ int ConsoleHandler::ListSelection(std::string title, std::vector<std::string> it
 		for (int i = 0; i < items.size(); i++) 
 		{
 			Write("[", false);
-			Write(res == i ? "@" : " ", false, 10);
+			Write(res == i ? "@" : " ", false, Colors::LIGHTCYAN);
 			Write("] : " + items[i]);
 		}
 
@@ -137,7 +139,28 @@ void ConsoleHandler::AddItemsMenu()
 
 void ConsoleHandler::ShowItemsMenu()
 {
-
+	Clear();
+	const std::vector<std::string> addItemsMenuItems =
+	{
+		"Customer",
+		"Movie",
+		"Cinema"
+	};
+	switch (ListSelection("Show items menu\nPlease select the item-group you want to show:", addItemsMenuItems))
+	{
+	case -1:
+		MainMenu();
+		break;
+	case 0:
+		ShowCustomers();
+		break;
+	case 1:
+		ShowMovies();
+		break;
+	case 2:
+		ShowCinemas();
+		break;
+	}
 }
 
 void ConsoleHandler::BookingWizard()
@@ -152,13 +175,13 @@ void ConsoleHandler::ShowWizard()
 
 void ConsoleHandler::AddCustomer()
 {
-	CustomersDB customersDB("C:\\_src\\x_temp_files\\customers.kmd");
-	std::string name = ReadString("Please enter the customers name: ", 15);
+	CustomersDB customersDB("C:\\x.temp\\customers.kmd");
+	std::string name = ReadString("Please enter the customers name: ", Colors::WHITE);
 	DateTime birthday =
 	{
-		ReadInt("Please enter the customers birthday day: ", 15),
-		ReadInt("Please enter the customers birthday month: ", 15),
-		ReadInt("Please enter the customers birthday year: ", 15),
+		ReadInt("Please enter the customers birthday day: ", Colors::WHITE),
+		ReadInt("Please enter the customers birthday month: ", Colors::WHITE),
+		ReadInt("Please enter the customers birthday year: ", Colors::WHITE),
 		0,
 		0
 	};
@@ -169,9 +192,9 @@ void ConsoleHandler::AddCustomer()
 
 void ConsoleHandler::AddMovie()
 {
-	MoviesDB moviesDB("C:\\_src\\x_temp_files\\movies.kmd");
-	std::string name = ReadString("Please enter the movies name: ", 15);
-	std::string info = ReadString("Please enter the movies info: ", 15);
+	MoviesDB moviesDB("C:\\x.temp\\movies.kmd");
+	std::string name = ReadString("Please enter the movies name: ", Colors::WHITE);
+	std::string info = ReadString("Please enter the movies info: ", Colors::WHITE);
 	moviesDB.Add(name, info);
 
 	AddItemsMenu();
@@ -179,17 +202,72 @@ void ConsoleHandler::AddMovie()
 
 void ConsoleHandler::AddCinema()
 {
-	CinemasDB cinemasDB("C:\\_src\\x_temp_files\\cinemas.kmd");
-	std::string name = ReadString("Please enter the cinemas name: ", 15);
-	int rows = ReadInt("Please enter the number of rows the cinema has: ", 15);
+	CinemasDB cinemasDB("C:\\x.temp\\cinemas.kmd");
+	std::string name = ReadString("Please enter the cinemas name: ", Colors::WHITE);
+	int rows = ReadInt("Please enter the number of rows the cinema has: ", Colors::WHITE);
 	std::vector<int> seats;
 
 	for (int i = 0; i < rows; i++) 
 	{
-		seats.push_back(ReadInt("Please enter the number of seats that row " + std::to_string(i + 1) + " has: ", 15));
+		seats.push_back(ReadInt("Please enter the number of seats that row " + std::to_string(i + 1) + " has: ", Colors::WHITE));
 	}
 
 	cinemasDB.Add(name, seats);
 
 	AddItemsMenu();
+}
+
+void ConsoleHandler::ShowCustomers()
+{
+	Write("Customers", true, Colors::LIGHTGREEN);
+	Write("ID: [Name; DD.MM.YYYY]\n", true, Colors::LIGHTGREEN);
+	CustomersDB customersDB("C:\\x.temp\\customers.kmd");
+	for (int i = 0; i < customersDB.customers.size(); i++)
+	{
+		Write(
+			std::to_string(customersDB.customers[i].id) + ": [" +
+			customersDB.customers[i].name + "; " + 
+			std::to_string(customersDB.customers[i].birthday.day) + "." +
+			std::to_string(customersDB.customers[i].birthday.month) + "." +
+			std::to_string(customersDB.customers[i].birthday.year) + "]"
+		);
+	}
+	_getch();
+	ShowItemsMenu();
+}
+
+void ConsoleHandler::ShowMovies()
+{
+	Write("Movies", true, Colors::LIGHTGREEN);
+	Write("ID: [Name; Info]\n", true, Colors::LIGHTGREEN);
+	MoviesDB moviesDB("C:\\x.temp\\movies.kmd");
+	for (int i = 0; i < moviesDB.movies.size(); i++)
+	{
+		Write(
+			std::to_string(moviesDB.movies[i].id) + ": [" +
+			moviesDB.movies[i].name + "; " +
+			moviesDB.movies[i].info + "]"
+		);
+	}
+	_getch();
+	ShowItemsMenu();
+}
+
+void ConsoleHandler::ShowCinemas()
+{
+	Write("Cinemas", true, Colors::LIGHTGREEN);
+	Write("ID: [Name; Seats]\n", true, Colors::LIGHTGREEN);
+	CinemasDB cinemasDB("C:\\x.temp\\cinemas.kmd");
+	for (int i = 0; i < cinemasDB.cinemas.size(); i++)
+	{
+		int seats = 0;
+		for (int e = 0; e < cinemasDB.cinemas[i].seats.size(); e++) seats += cinemasDB.cinemas[i].seats[e];
+		Write(
+			std::to_string(cinemasDB.cinemas[i].id) + ": [" +
+			cinemasDB.cinemas[i].name + "; " +
+			std::to_string(seats) + "]"
+		);
+	}
+	_getch();
+	ShowItemsMenu();
 }

@@ -38,4 +38,10 @@ public:
 	void AddMovie();
 
 	void AddCinema();
+
+	void ShowCustomers();
+
+	void ShowMovies();
+
+	void ShowCinemas();
 };
