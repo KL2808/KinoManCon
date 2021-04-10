@@ -60,5 +60,11 @@ void CinemasDB::Add(std::string name, std::vector<int> seats)
 
 void CinemasDB::Delete(int id)
 {
-
+	std::vector<Cinema> newCinema;
+	for (int i = 0; i < cinemas.size(); i++)
+	{
+		if (cinemas[i].id != id) newCinema.push_back(cinemas[i]);
+	}
+	cinemas = newCinema;
+	Save();
 }

@@ -623,7 +623,25 @@ void ConsoleHandler::DeleteBooking()
 
 void ConsoleHandler::DeleteCinema()
 {
+	std::vector<std::string> listOfCinemas;
 
+	CinemasDB cinemasDB("C:\\x.temp\\cinemas.kmcf");
+
+	for (int i = 0; i < cinemasDB.cinemas.size(); i++)
+	{
+		int seats = 0;
+		for (int e = 0; e < cinemasDB.cinemas[i].seats.size(); e++) seats += cinemasDB.cinemas[i].seats[e];
+		listOfCinemas.push_back(
+			std::to_string(cinemasDB.cinemas[i].id) + ": [" +
+			cinemasDB.cinemas[i].name + "; " +
+			std::to_string(seats) + "]"
+		);
+	}
+	
+	int selectedCinema = ListSelection("Delete cinemas\nID: [Name; Seats]\n", listOfCinemas, Colors::YELLOW);
+	if (selectedCinema == -1) return;
+
+	cinemasDB.Delete(cinemasDB.cinemas[selectedCinema].id);
 }
 
 void ConsoleHandler::DeleteCustomer()
