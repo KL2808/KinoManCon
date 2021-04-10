@@ -651,7 +651,22 @@ void ConsoleHandler::DeleteCustomer()
 
 void ConsoleHandler::DeleteMovie()
 {
+	std::vector<std::string> listOfMovies;
 
+	MoviesDB moviesDB("C:\\x.temp\\movies.kmcf");
+	for (int i = 0; i < moviesDB.movies.size(); i++)
+	{
+		listOfMovies.push_back(
+			std::to_string(moviesDB.movies[i].id) + ": [" +
+			moviesDB.movies[i].name + "; " +
+			moviesDB.movies[i].info + "]"
+		);
+	}
+
+	int selectedMovies = ListSelection("Movies\nID: [Name; Info]\n", listOfMovies, Colors::YELLOW);
+	if (selectedMovies == -1) return;
+
+	moviesDB.Delete(moviesDB.movies[selectedMovies].id);
 }
 
 void ConsoleHandler::DeleteShow()
