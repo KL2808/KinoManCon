@@ -29,6 +29,8 @@ public:
 
 	void ShowItemsMenu();
 
+	void DeleteItemsMenu();
+
 	void AddCustomer();
 
 	void AddMovie();
@@ -48,4 +50,14 @@ public:
 	void ShowBookings();
 
 	void ShowShows();
+
+	void DeleteBooking();
+
+	void DeleteCinema();
+
+	void DeleteCustomer();
+
+	void DeleteMovie();
+
+	void DeleteShow();
 };

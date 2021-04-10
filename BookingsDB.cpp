@@ -54,6 +54,17 @@ void BookingsDB::Load()
 
 void BookingsDB::Add(int customerId, int showId, Coordinates seat)
 {
-	bookings.push_back({ (int)bookings.size() + 0, customerId, showId, seat});
+	bookings.push_back({ bookings[bookings.size() - 1].id + 1, customerId, showId, seat});
+	Save();
+}
+
+void BookingsDB::Delete(int id)
+{
+	std::vector<Booking> newBookings;
+	for (int i = 0; i < bookings.size(); i++)
+	{
+		if (bookings[i].id != id) newBookings.push_back(bookings[i]);
+	}
+	bookings = newBookings;
 	Save();
 }

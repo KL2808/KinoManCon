@@ -155,6 +155,8 @@ Coordinates ConsoleHandler::MatrixSelection(std::string title, std::vector<int> 
 	return selection;
 }
 
+#pragma region main menues
+
 void ConsoleHandler::MainMenu()
 {
 	int endManCon = false;
@@ -163,10 +165,10 @@ void ConsoleHandler::MainMenu()
 		Clear();
 		const std::vector<std::string> mainMenuItems =
 		{
-			"Add new items",
-			"Show existing items",
-			"Start booking Wizard",
-			"Settings",
+			"Add items",
+			"Show items",
+			"Booking Wizard",
+			"Delete items",
 		};
 		switch (ListSelection("Main menu\nPlease select an item:", mainMenuItems))
 		{
@@ -183,6 +185,7 @@ void ConsoleHandler::MainMenu()
 			AddBooking();
 			break;
 		case 3:
+			DeleteItemsMenu();
 			break;
 		}
 	} while (!endManCon);
@@ -228,7 +231,7 @@ void ConsoleHandler::ShowItemsMenu()
 	do
 	{
 		Clear();
-		const std::vector<std::string> addItemsMenuItems =
+		const std::vector<std::string> showItemsMenuItems =
 		{
 			"Customer",
 			"Movie",
@@ -236,7 +239,7 @@ void ConsoleHandler::ShowItemsMenu()
 			"Shows",
 			"Bookings"
 		};
-		switch (ListSelection("Show items menu\nPlease select the item-group you want to show:", addItemsMenuItems))
+		switch (ListSelection("Show items menu\nPlease select the item group you want to show:", showItemsMenuItems))
 		{
 		case -1:
 			backToMainMenu = true;
@@ -259,6 +262,48 @@ void ConsoleHandler::ShowItemsMenu()
 		}
 	} while (!backToMainMenu);
 }
+
+void ConsoleHandler::DeleteItemsMenu()
+{
+	int backToMainMenu = false;
+	do
+	{
+		Clear();
+		const std::vector<std::string> deleteItemsMenuItems =
+		{
+			"Customer",
+			"Movie",
+			"Cinema",
+			"Shows",
+			"Bookings"
+		};
+		switch (ListSelection("Delete items menu\nPlease select the item group in which you want to delete an item:", deleteItemsMenuItems))
+		{
+		case -1:
+			backToMainMenu = true;
+			break;
+		case 0:
+			DeleteCustomer();
+			break;
+		case 1:
+			DeleteMovie();
+			break;
+		case 2:
+			DeleteCinema();
+			break;
+		case 3:
+			DeleteShow();
+			break;
+		case 4:
+			DeleteBooking();
+			break;
+		}
+	} while (!backToMainMenu);
+}
+
+#pragma endregion
+
+#pragma region adding items
 
 void ConsoleHandler::AddCustomer()
 {
@@ -430,6 +475,10 @@ void ConsoleHandler::AddShow()
 	showsDB.Add(movieId, cinemaId, startTime);
 }
 
+#pragma endregion
+
+#pragma region showing items
+
 void ConsoleHandler::ShowCustomers()
 {
 	Write("Customers", true, Colors::YELLOW);
@@ -562,3 +611,161 @@ void ConsoleHandler::ShowShows()
 	int n = ListSelection("Shows\nID: [Movie; Cinema; DD.MM.YYYY HH : mm]", listOfShows, Colors::YELLOW);
 	//TODO: List selection for shows -> all bookings for this show
 }
+
+#pragma endregion
+
+#pragma region deleting items
+	
+void ConsoleHandler::DeleteBooking() 
+{
+	std::vector<std::string> listOfBookings;
+
+	BookingsDB bookingsDB("C:\\x.temp\\bookings.kmcf");
+	CustomersDB customersDB("C:\\x.temp\\customers.kmcf");
+	ShowsDB showsDB("C:\\x.temp\\shows.kmcf");
+	MoviesDB moviesDB("C:\\x.temp\\movies.kmcf");
+
+	for (int i = 0; i < bookingsDB.bookings.size(); i++)
+	{
+
+		std::string customerName;
+		std::string movieName;
+
+		for (int e = 0; e < customersDB.customers.size(); e++)
+		{
+			if (customersDB.customers[e].id == bookingsDB.bookings[i].customerId) customerName = customersDB.customers[e].name;
+		}
+
+		for (int e = 0; e < showsDB.shows.size(); e++)
+		{
+			if (showsDB.shows[e].id == bookingsDB.bookings[i].showId)
+			{
+				for (int a = 0; a < moviesDB.movies.size(); a++)
+				{
+					if (moviesDB.movies[a].id == showsDB.shows[e].movieId) movieName = moviesDB.movies[a].name;
+				}
+			}
+		}
+
+		listOfBookings.push_back(
+			std::to_string(bookingsDB.bookings[i].id) + ": [" +
+			customerName + "; " +
+			movieName + "; " +
+			std::to_string(bookingsDB.bookings[i].seat.y) + ", " +
+			std::to_string(bookingsDB.bookings[i].seat.x) + "]"
+		);
+	}
+	
+	int selectedBooking = ListSelection("Delete bookings\nID: [Customer; Movie; Row, Seat]\n", listOfBookings, Colors::YELLOW);
+	if (selectedBooking == -1) return;
+
+	bookingsDB.Delete(bookingsDB.bookings[selectedBooking].id);
+}
+
+void ConsoleHandler::DeleteCinema()
+{
+	std::vector<std::string> listOfCinemas;
+
+	CinemasDB cinemasDB("C:\\x.temp\\cinemas.kmcf");
+
+	for (int i = 0; i < cinemasDB.cinemas.size(); i++)
+	{
+		int seats = 0;
+		for (int e = 0; e < cinemasDB.cinemas[i].seats.size(); e++) seats += cinemasDB.cinemas[i].seats[e];
+		listOfCinemas.push_back(
+			std::to_string(cinemasDB.cinemas[i].id) + ": [" +
+			cinemasDB.cinemas[i].name + "; " +
+			std::to_string(seats) + "]"
+		);
+	}
+	
+	int selectedCinema = ListSelection("Delete cinemas\nID: [Name; Seats]\n", listOfCinemas, Colors::YELLOW);
+	if (selectedCinema == -1) return;
+
+	cinemasDB.Delete(cinemasDB.cinemas[selectedCinema].id);
+}
+
+void ConsoleHandler::DeleteCustomer()
+{
+	std::vector<std::string> listOfCustomers;
+
+	CustomersDB customersDB("C:\\x.temp\\customers.kmcf");
+
+	for (int i = 0; i < customersDB.customers.size(); i++)
+	{
+		listOfCustomers.push_back(
+			std::to_string(customersDB.customers[i].id) + ": [" +
+			customersDB.customers[i].name + "; " +
+			std::to_string(customersDB.customers[i].birthday.day) + "." +
+			std::to_string(customersDB.customers[i].birthday.month) + "." +
+			std::to_string(customersDB.customers[i].birthday.year) + "]"
+		);
+	}
+	
+	int selectedCustomer = ListSelection("Delete customer\nID: [Name; DD.MM.YYYY]\n", listOfCustomers, Colors::YELLOW);
+	if (selectedCustomer == -1) return;
+
+	customersDB.Delete(customersDB.customers[selectedCustomer].id);
+}
+
+void ConsoleHandler::DeleteMovie()
+{
+	std::vector<std::string> listOfMovies;
+
+	MoviesDB moviesDB("C:\\x.temp\\movies.kmcf");
+	for (int i = 0; i < moviesDB.movies.size(); i++)
+	{
+		listOfMovies.push_back(
+			std::to_string(moviesDB.movies[i].id) + ": [" +
+			moviesDB.movies[i].name + "; " +
+			moviesDB.movies[i].info + "]"
+		);
+	}
+
+	int selectedMovie = ListSelection("Delete movies\nID: [Name; Info]\n", listOfMovies, Colors::YELLOW);
+	if (selectedMovie == -1) return;
+
+	moviesDB.Delete(moviesDB.movies[selectedMovie].id);
+}
+
+void ConsoleHandler::DeleteShow()
+{
+	std::vector<std::string> listOfShows;
+
+	ShowsDB showsDB("C:\\x.temp\\shows.kmcf");
+	MoviesDB moviesDB("C:\\x.temp\\movies.kmcf");
+	CinemasDB cinemasDB("C:\\x.temp\\cinemas.kmcf");
+
+	for (int i = 0; i < showsDB.shows.size(); i++)
+	{
+		std::string movieName;
+		for (int e = 0; e < moviesDB.movies.size(); e++)
+		{
+			if (moviesDB.movies[e].id == showsDB.shows[i].movieId) movieName = moviesDB.movies[e].name;
+		}
+
+		std::string cinemaName;
+		for (int e = 0; e < cinemasDB.cinemas.size(); e++)
+		{
+			if (cinemasDB.cinemas[e].id == showsDB.shows[i].cinemaId) cinemaName = cinemasDB.cinemas[e].name;
+		}
+
+		listOfShows.push_back(
+			std::to_string(showsDB.shows[i].id) + ": [" +
+			movieName + "; " +
+			cinemaName + "; " +
+			std::to_string(showsDB.shows[i].startTime.day) + "." +
+			std::to_string(showsDB.shows[i].startTime.month) + "." +
+			std::to_string(showsDB.shows[i].startTime.year) + " " +
+			std::to_string(showsDB.shows[i].startTime.hours) + ":" +
+			std::to_string(showsDB.shows[i].startTime.minutes) + "]"
+		);
+	}
+
+	int selectedShow = ListSelection("Delete shows\nID: [Movie; Cinema; DD.MM.YYYY HH : mm]", listOfShows, Colors::YELLOW);
+	if (selectedShow == -1) return;
+
+	showsDB.Delete(showsDB.shows[selectedShow].id);
+}
+	
+#pragma endregion
