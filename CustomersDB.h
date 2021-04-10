@@ -29,4 +29,6 @@ public:
 	void Load();
 
 	void Add(std::string, DateTime);
+
+	void Delete(int id);
 };

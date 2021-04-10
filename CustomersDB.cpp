@@ -59,6 +59,17 @@ void CustomersDB::Load()
 
 void CustomersDB::Add(std::string name, DateTime birthday)
 {
-	customers.push_back({ (int)customers.size() + 0, name, birthday });
+	customers.push_back({ customers[customers.size() - 1].id + 1, name, birthday });
+	Save();
+}
+
+void CustomersDB::Delete(int id)
+{
+	std::vector<Customer> newCustomers;
+	for (int i = 0; i < customers.size(); i++)
+	{
+		if (customers[i].id != id) newCustomers.push_back(customers[i]);
+	}
+	customers = newCustomers;
 	Save();
 }

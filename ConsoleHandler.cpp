@@ -155,6 +155,8 @@ Coordinates ConsoleHandler::MatrixSelection(std::string title, std::vector<int> 
 	return selection;
 }
 
+#pragma region main menues
+
 void ConsoleHandler::MainMenu()
 {
 	int endManCon = false;
@@ -163,10 +165,10 @@ void ConsoleHandler::MainMenu()
 		Clear();
 		const std::vector<std::string> mainMenuItems =
 		{
-			"Add new items",
-			"Show existing items",
-			"Start booking Wizard",
-			"Settings",
+			"Add items",
+			"Show items",
+			"Booking Wizard",
+			"Delete items",
 		};
 		switch (ListSelection("Main menu\nPlease select an item:", mainMenuItems))
 		{
@@ -183,6 +185,7 @@ void ConsoleHandler::MainMenu()
 			AddBooking();
 			break;
 		case 3:
+			DeleteItemsMenu();
 			break;
 		}
 	} while (!endManCon);
@@ -228,7 +231,7 @@ void ConsoleHandler::ShowItemsMenu()
 	do
 	{
 		Clear();
-		const std::vector<std::string> addItemsMenuItems =
+		const std::vector<std::string> showItemsMenuItems =
 		{
 			"Customer",
 			"Movie",
@@ -236,7 +239,7 @@ void ConsoleHandler::ShowItemsMenu()
 			"Shows",
 			"Bookings"
 		};
-		switch (ListSelection("Show items menu\nPlease select the item-group you want to show:", addItemsMenuItems))
+		switch (ListSelection("Show items menu\nPlease select the item group you want to show:", showItemsMenuItems))
 		{
 		case -1:
 			backToMainMenu = true;
@@ -259,6 +262,48 @@ void ConsoleHandler::ShowItemsMenu()
 		}
 	} while (!backToMainMenu);
 }
+
+void ConsoleHandler::DeleteItemsMenu()
+{
+	int backToMainMenu = false;
+	do
+	{
+		Clear();
+		const std::vector<std::string> deleteItemsMenuItems =
+		{
+			"Customer",
+			"Movie",
+			"Cinema",
+			"Shows",
+			"Bookings"
+		};
+		switch (ListSelection("Delete items menu\nPlease select the item group in which you want to delete an item:", deleteItemsMenuItems))
+		{
+		case -1:
+			backToMainMenu = true;
+			break;
+		case 0:
+			DeleteCustomer();
+			break;
+		case 1:
+			DeleteMovie();
+			break;
+		case 2:
+			DeleteCinema();
+			break;
+		case 3:
+			DeleteShow();
+			break;
+		case 4:
+			DeleteBooking();
+			break;
+		}
+	} while (!backToMainMenu);
+}
+
+#pragma endregion
+
+#pragma region adding items
 
 void ConsoleHandler::AddCustomer()
 {
@@ -430,6 +475,10 @@ void ConsoleHandler::AddShow()
 	showsDB.Add(movieId, cinemaId, startTime);
 }
 
+#pragma endregion
+
+#pragma region showing items
+
 void ConsoleHandler::ShowCustomers()
 {
 	Write("Customers", true, Colors::YELLOW);
@@ -562,3 +611,52 @@ void ConsoleHandler::ShowShows()
 	int n = ListSelection("Shows\nID: [Movie; Cinema; DD.MM.YYYY HH : mm]", listOfShows, Colors::YELLOW);
 	//TODO: List selection for shows -> all bookings for this show
 }
+
+#pragma endregion
+
+#pragma region deleting items
+	
+void ConsoleHandler::DeleteBooking() 
+{
+
+}
+
+void ConsoleHandler::DeleteCinema()
+{
+
+}
+
+void ConsoleHandler::DeleteCustomer()
+{
+	std::vector<std::string> listOfCustomers;
+
+	CustomersDB customersDB("C:\\x.temp\\customers.kmcf");
+
+	for (int i = 0; i < customersDB.customers.size(); i++)
+	{
+		listOfCustomers.push_back(
+			std::to_string(customersDB.customers[i].id) + ": [" +
+			customersDB.customers[i].name + "; " +
+			std::to_string(customersDB.customers[i].birthday.day) + "." +
+			std::to_string(customersDB.customers[i].birthday.month) + "." +
+			std::to_string(customersDB.customers[i].birthday.year) + "]"
+		);
+	}
+	
+	int selectedCustomer = ListSelection("Delete Customer\nID: [Name; DD.MM.YYYY]\n", listOfCustomers, Colors::YELLOW);
+	if (selectedCustomer == -1) return;
+
+	customersDB.Delete(customersDB.customers[selectedCustomer].id);
+}
+
+void ConsoleHandler::DeleteMovie()
+{
+
+}
+
+void ConsoleHandler::DeleteShow()
+{
+
+}
+	
+#pragma endregion

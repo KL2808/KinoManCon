@@ -27,4 +27,6 @@ public:
 	void Load();
 
 	void Add(std::string, std::vector<int>);
+
+	void Delete(int id);
 };

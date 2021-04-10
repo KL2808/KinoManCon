@@ -31,4 +31,6 @@ public:
 	void Load();
 
 	void Add(int, int, DateTime);
+
+	void Delete(int id);
 };

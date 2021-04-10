@@ -48,6 +48,11 @@ void MoviesDB::Load()
 
 void MoviesDB::Add(std::string name, std::string info) 
 {
-	movies.push_back({ (int)movies.size() + 0, name, info });
+	movies.push_back({ movies[movies.size() - 1].id + 1, name, info });
 	Save();
+}
+
+void MoviesDB::Delete(int id)
+{
+
 }

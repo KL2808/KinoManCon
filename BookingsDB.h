@@ -30,4 +30,6 @@ public:
 	void Load();
 
 	void Add(int, int, Coordinates);
+
+	void Delete(int id);
 };
