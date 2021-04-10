@@ -80,5 +80,11 @@ void ShowsDB::Add(int movieId, int cinemaId, DateTime startTime)
 
 void ShowsDB::Delete(int id)
 {
-
+	std::vector<Show> newShow;
+	for (int i = 0; i < shows.size(); i++)
+	{
+		if (shows[i].id != id) newShow.push_back(shows[i]);
+	}
+	shows = newShow;
+	Save();
 }

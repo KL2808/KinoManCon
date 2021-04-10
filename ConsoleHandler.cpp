@@ -643,7 +643,7 @@ void ConsoleHandler::DeleteCustomer()
 		);
 	}
 	
-	int selectedCustomer = ListSelection("Delete Customer\nID: [Name; DD.MM.YYYY]\n", listOfCustomers, Colors::YELLOW);
+	int selectedCustomer = ListSelection("Delete customer\nID: [Name; DD.MM.YYYY]\n", listOfCustomers, Colors::YELLOW);
 	if (selectedCustomer == -1) return;
 
 	customersDB.Delete(customersDB.customers[selectedCustomer].id);
@@ -663,15 +663,50 @@ void ConsoleHandler::DeleteMovie()
 		);
 	}
 
-	int selectedMovies = ListSelection("Movies\nID: [Name; Info]\n", listOfMovies, Colors::YELLOW);
-	if (selectedMovies == -1) return;
+	int selectedMovie = ListSelection("Delete movies\nID: [Name; Info]\n", listOfMovies, Colors::YELLOW);
+	if (selectedMovie == -1) return;
 
-	moviesDB.Delete(moviesDB.movies[selectedMovies].id);
+	moviesDB.Delete(moviesDB.movies[selectedMovie].id);
 }
 
 void ConsoleHandler::DeleteShow()
 {
+	std::vector<std::string> listOfShows;
 
+	ShowsDB showsDB("C:\\x.temp\\shows.kmcf");
+	MoviesDB moviesDB("C:\\x.temp\\movies.kmcf");
+	CinemasDB cinemasDB("C:\\x.temp\\cinemas.kmcf");
+
+	for (int i = 0; i < showsDB.shows.size(); i++)
+	{
+		std::string movieName;
+		for (int e = 0; e < moviesDB.movies.size(); e++)
+		{
+			if (moviesDB.movies[e].id == showsDB.shows[i].movieId) movieName = moviesDB.movies[e].name;
+		}
+
+		std::string cinemaName;
+		for (int e = 0; e < cinemasDB.cinemas.size(); e++)
+		{
+			if (cinemasDB.cinemas[e].id == showsDB.shows[i].cinemaId) cinemaName = cinemasDB.cinemas[e].name;
+		}
+
+		listOfShows.push_back(
+			std::to_string(showsDB.shows[i].id) + ": [" +
+			movieName + "; " +
+			cinemaName + "; " +
+			std::to_string(showsDB.shows[i].startTime.day) + "." +
+			std::to_string(showsDB.shows[i].startTime.month) + "." +
+			std::to_string(showsDB.shows[i].startTime.year) + " " +
+			std::to_string(showsDB.shows[i].startTime.hours) + ":" +
+			std::to_string(showsDB.shows[i].startTime.minutes) + "]"
+		);
+	}
+
+	int selectedShow = ListSelection("Delete shows\nID: [Movie; Cinema; DD.MM.YYYY HH : mm]", listOfShows, Colors::YELLOW);
+	if (selectedShow == -1) return;
+
+	showsDB.Delete(showsDB.shows[selectedShow].id);
 }
 	
 #pragma endregion
