@@ -618,7 +618,48 @@ void ConsoleHandler::ShowShows()
 	
 void ConsoleHandler::DeleteBooking() 
 {
+	std::vector<std::string> listOfBookings;
 
+	BookingsDB bookingsDB("C:\\x.temp\\bookings.kmcf");
+	CustomersDB customersDB("C:\\x.temp\\customers.kmcf");
+	ShowsDB showsDB("C:\\x.temp\\shows.kmcf");
+	MoviesDB moviesDB("C:\\x.temp\\movies.kmcf");
+
+	for (int i = 0; i < bookingsDB.bookings.size(); i++)
+	{
+
+		std::string customerName;
+		std::string movieName;
+
+		for (int e = 0; e < customersDB.customers.size(); e++)
+		{
+			if (customersDB.customers[e].id == bookingsDB.bookings[i].customerId) customerName = customersDB.customers[e].name;
+		}
+
+		for (int e = 0; e < showsDB.shows.size(); e++)
+		{
+			if (showsDB.shows[e].id == bookingsDB.bookings[i].showId)
+			{
+				for (int a = 0; a < moviesDB.movies.size(); a++)
+				{
+					if (moviesDB.movies[a].id == showsDB.shows[e].movieId) movieName = moviesDB.movies[a].name;
+				}
+			}
+		}
+
+		listOfBookings.push_back(
+			std::to_string(bookingsDB.bookings[i].id) + ": [" +
+			customerName + "; " +
+			movieName + "; " +
+			std::to_string(bookingsDB.bookings[i].seat.y) + ", " +
+			std::to_string(bookingsDB.bookings[i].seat.x) + "]"
+		);
+	}
+	
+	int selectedBooking = ListSelection("Delete bookings\nID: [Customer; Movie; Row, Seat]\n", listOfBookings, Colors::YELLOW);
+	if (selectedBooking == -1) return;
+
+	bookingsDB.Delete(bookingsDB.bookings[selectedBooking].id);
 }
 
 void ConsoleHandler::DeleteCinema()
