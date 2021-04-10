@@ -1,15 +1,16 @@
- #pragma once
+#pragma once
 
 #include <string>
 #include <vector>
+
+#include "Coordinates.h"
 
 struct Booking
 {
 	int id;
 	int customerId;
 	int showId;
-	int row; 
-	int seat;
+	Coordinates seat;
 };
 
 class BookingsDB
@@ -28,5 +29,5 @@ public:
 
 	void Load();
 
-	void Add();
+	void Add(int, int, Coordinates);
 };

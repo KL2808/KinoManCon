@@ -86,5 +86,11 @@
     <ClInclude Include="Colors.h">
       <Filter>Headerdateien\UserInterfaceTools</Filter>
     </ClInclude>
+    <ClInclude Include="Coordinates.h">
+      <Filter>Headerdateien\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Keys.h">
+      <Filter>Headerdateien\UserInterfaceTools</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

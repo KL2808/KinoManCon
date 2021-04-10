@@ -30,5 +30,5 @@ public:
 
 	void Load();
 
-	void Add();
+	void Add(int, int, DateTime);
 };

@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 
+#include "Coordinates.h"
+
 static class ConsoleHandler
 {
 private:
@@ -11,17 +13,15 @@ public:
 
 	void Clear();
 
-	void Write(std::string);
+	void Write(std::string string, bool endl, int color);
 
-	void Write(std::string, bool);
+	std::string ReadString(std::string string , int color);
 
-	void Write(std::string, bool, int);
+	int ReadInt(std::string string, int color);
 
-	std::string ReadString(std::string, int);
+	int ListSelection(std::string title, std::vector<std::string> items, int titleColor);
 
-	int ReadInt(std::string, int);
-
-	int ListSelection(std::string title, std::vector<std::string> items);
+	Coordinates MatrixSelection(std::string title, std::vector<int> matrix, std::vector<Coordinates> blockedPoints, int titleColor);
 
 	void MainMenu();
 
@@ -29,19 +29,23 @@ public:
 
 	void ShowItemsMenu();
 
-	void BookingWizard();
-	
-	void ShowWizard();
-
 	void AddCustomer();
 
 	void AddMovie();
 
 	void AddCinema();
 
+	void AddBooking();
+
+	void AddShow();
+
 	void ShowCustomers();
 
 	void ShowMovies();
 
 	void ShowCinemas();
+
+	void ShowBookings();
+
+	void ShowShows();
 };

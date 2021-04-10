@@ -18,8 +18,8 @@ void BookingsDB::Save()
 		data += std::to_string(bookings[i].id) + ";";
 		data += std::to_string(bookings[i].customerId) + ";";
 		data += std::to_string(bookings[i].showId) + ";";
-		data += std::to_string(bookings[i].row) + ";";
-		data += std::to_string(bookings[i].seat) + ";\n";
+		data += std::to_string(bookings[i].seat.x) + ";";
+		data += std::to_string(bookings[i].seat.y) + ";\n";
 	}
 
 	std::ofstream File(fullpath);
@@ -42,10 +42,18 @@ void BookingsDB::Load()
 			atoi(members[0].c_str()),
 			atoi(members[1].c_str()),
 			atoi(members[2].c_str()),
-			atoi(members[3].c_str()),
-			atoi(members[4].c_str())
+			{
+				atoi(members[3].c_str()),
+				atoi(members[4].c_str())
+			}
 		};
 		bookings.push_back(booking);
 	}
 	file.close();
+}
+
+void BookingsDB::Add(int customerId, int showId, Coordinates seat)
+{
+	bookings.push_back({ (int)bookings.size() + 0, customerId, showId, seat});
+	Save();
 }

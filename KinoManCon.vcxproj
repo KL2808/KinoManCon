@@ -156,6 +156,8 @@
     <ClInclude Include="ConsoleHandler.h" />
     <ClInclude Include="CustomersDB.h" />
     <ClInclude Include="DateTime.h" />
+    <ClInclude Include="Coordinates.h" />
+    <ClInclude Include="Keys.h" />
     <ClInclude Include="MoviesDB.h" />
     <ClInclude Include="ShowsDB.h" />
   </ItemGroup>

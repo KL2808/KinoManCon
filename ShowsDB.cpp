@@ -29,8 +29,9 @@ void ShowsDB::Save()
 
 		for (int e = 0; e < shows[i].bookingIds.size(); e++)
 		{
-			data += std::to_string(shows[i].bookingIds[e]) + (e == shows[i].bookingIds.size() - 1 ? ";\n" : ",");
+			data += std::to_string(shows[i].bookingIds[e]) + (e != shows[i].bookingIds.size() - 1 ? "," : "");
 		}
+		data += ";\n";
 	}
 
 	std::ofstream file(fullpath);
@@ -47,7 +48,8 @@ void ShowsDB::Load()
 	{
 		std::vector<std::string> members = split(line, ';');
 		std::vector<std::string> dateTime_members = split(members[3], ',');
-		std::vector<std::string> bookingids_members = split(members[4], ',');
+		std::vector<std::string> bookingids_members;
+		if (members.size() > 4) bookingids_members = split(members[4], ',');
 		DateTime startTime =
 		{
 			atoi(dateTime_members[0].c_str()), //D
@@ -67,4 +69,11 @@ void ShowsDB::Load()
 		shows.push_back(show);
 	}
 	file.close();
+}
+
+void ShowsDB::Add(int movieId, int cinemaId, DateTime startTime)
+{
+	std::vector<int> bookingIds;
+	shows.push_back({ (int)shows.size() + 0, movieId, cinemaId, startTime, bookingIds });
+	Save();
 }
