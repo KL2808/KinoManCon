@@ -59,7 +59,8 @@ void CustomersDB::Load()
 
 void CustomersDB::Add(std::string name, DateTime birthday)
 {
-	customers.push_back({ customers[customers.size() - 1].id + 1, name, birthday });
+	if(customers.size() == 0) customers.push_back({1 , name, birthday });
+	else customers.push_back({ customers[customers.size() - 1].id + 1, name, birthday });
 	Save();
 }
 
