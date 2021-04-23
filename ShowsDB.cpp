@@ -74,7 +74,8 @@ void ShowsDB::Load()
 void ShowsDB::Add(int movieId, int cinemaId, DateTime startTime)
 {
 	std::vector<int> bookingIds;
-	shows.push_back({ shows[shows.size() - 1].id + 1, movieId, cinemaId, startTime, bookingIds });
+	if (shows.size() == 0) shows.push_back({ 1, movieId, cinemaId, startTime, bookingIds });
+	else shows.push_back({ shows[shows.size() - 1].id + 1, movieId, cinemaId, startTime, bookingIds });
 	Save();
 }
 

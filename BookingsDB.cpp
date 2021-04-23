@@ -54,7 +54,8 @@ void BookingsDB::Load()
 
 void BookingsDB::Add(int customerId, int showId, Coordinates seat)
 {
-	bookings.push_back({ bookings[bookings.size() - 1].id + 1, customerId, showId, seat});
+	if (bookings.size() == 0) bookings.push_back({ 1, customerId, showId, seat });
+	else bookings.push_back({ bookings[bookings.size() - 1].id + 1, customerId, showId, seat});
 	Save();
 }
 
